@@ -9,5 +9,5 @@ def read_from_csv(file_name):
         return df
 
 
-def save_to_csv(filename, df):
+def save_to_csv(df, filename):
     df.to_csv(filename, index=False)

@@ -9,7 +9,6 @@ from csv_utils import read_from_csv, save_to_csv
 from pipeline_config import (
     JOBS_KEYWORD_MATCHED_CSV,
     JOBS_NEW,
-    JOBS_SCRAPPED_CSV,
     KEYWORDS_REQUIREMENTS,
 )
 
