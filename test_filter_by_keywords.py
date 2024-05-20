@@ -73,12 +73,12 @@ def test_description_filtering_function():
 
 
 def test_df_filtering_function(mock_df):
-    keywords = ["js", "JavaScript", "TypeScript", "ts"]
+    keywords = [["js", "JavaScript", "TypeScript", "ts"]]
     result_series = df_filtering_function(mock_df["description"], keywords)
-    assert result_series.sum() == 1  # Only one row should match
+    assert result_series.sum() == 2  # 2 have JS based
 
 
 def test_filter_by_keywords(mock_df, keyword_requirements):
     filtered_df = filter_by_keywords(mock_df, keyword_requirements)
     assert not filtered_df.empty
-    assert len(filtered_df) == 1  # All descriptions match at least one keyword group
+    assert len(filtered_df) == 1  # One description matches all requirements
