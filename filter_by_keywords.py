@@ -5,28 +5,14 @@ from typing import List
 import pandas as pd
 from textblob import TextBlob
 
-
-# Define the keywords to search for
-keywords_requirements = [
-    ["react", "next.js", "nextjs"],  # Frontend Framework
-    ["js", "JavaScript", "TypeScript", "ts"],  # Language
-    ["python", "py", "node"],  # Backend
-    ["AI", "artificial intelligence", "llm", "machine learning", "ML"],  # AI
-]
+from csv_utils import read_from_csv, save_to_csv
+from pipeline_config import KEYWORDS_REQUIREMENTS
 
 
 def tokenize(text: str) -> List[str]:
     """Tokenize a text into a list of words."""
     blob = TextBlob(text)
     return [token.lower() for token in blob.words]
-
-
-def read_from_csv(file_name):
-    # Open the CSV file
-    with open(file_name, "r") as file:
-        # Read from csv with a pd dataframe
-        df = pd.read_csv(file)
-        return df
 
 
 def filter_by_keywords(df, keywords_requirements):
@@ -71,8 +57,8 @@ def single_requirement_description_filter(
 
 if __name__ == "__main__":
     # Read the CSV file
-    df = filter_by_keywords(read_from_csv("scrapped_jobs.csv"), keywords_requirements)
+    df = filter_by_keywords(read_from_csv("scrapped_jobs.csv"), KEYWORDS_REQUIREMENTS)
     # Print the filtered dataframe
     print(df)
     # Save the filtered dataframe to a new CSV file
-    df.to_csv("keyword_matched_jobs.csv", index=False)
+    save_to_csv("keyword_matched_jobs.csv", df)
