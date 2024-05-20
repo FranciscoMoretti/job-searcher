@@ -6,7 +6,12 @@ import pandas as pd
 from textblob import TextBlob
 
 from csv_utils import read_from_csv, save_to_csv
-from pipeline_config import KEYWORDS_REQUIREMENTS
+from pipeline_config import (
+    JOBS_KEYWORD_MATCHED_CSV,
+    JOBS_NEW,
+    JOBS_SCRAPPED_CSV,
+    KEYWORDS_REQUIREMENTS,
+)
 
 
 def tokenize(text: str) -> List[str]:
@@ -57,8 +62,8 @@ def single_requirement_description_filter(
 
 if __name__ == "__main__":
     # Read the CSV file
-    df = filter_by_keywords(read_from_csv("scrapped_jobs.csv"), KEYWORDS_REQUIREMENTS)
+    df = filter_by_keywords(read_from_csv(JOBS_NEW), KEYWORDS_REQUIREMENTS)
     # Print the filtered dataframe
     print(df)
     # Save the filtered dataframe to a new CSV file
-    save_to_csv("keyword_matched_jobs.csv", df)
+    save_to_csv(df, JOBS_KEYWORD_MATCHED_CSV)

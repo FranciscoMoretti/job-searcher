@@ -2,13 +2,17 @@ from jobspy import scrape_jobs
 import pandas as pd
 
 jobs: pd.DataFrame = scrape_jobs(
-    site_name=["indeed", "linkedin", "zip_recruiter", "glassdoor"],
-    search_term="software engineer",
-    location="Dallas, TX",
+    site_name=["linkedin"],  # ["indeed", "linkedin", "glassdoor"],
+    location="london",
+    search_term="Frontend Engineer",
     results_wanted=25,  # be wary the higher it is, the more likey you'll get blocked (rotating proxy can help tho)
-    country_indeed="USA",
+    linkedin_fetch_description=True,
+    job_type="fulltime",
+    country_indeed="UK",
+    distance=25,
     # proxy="http://jobspy:5a4vpWtj8EeJ2hoYzk@ca.smartproxy.com:20001",
 )
+
 
 # formatting for pandas
 pd.set_option("display.max_columns", None)

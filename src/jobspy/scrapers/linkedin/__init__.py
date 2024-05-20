@@ -79,12 +79,17 @@ class LinkedInScraper(Scraper):
                 "keywords": scraper_input.search_term,
                 "location": scraper_input.location,
                 "distance": scraper_input.distance,
-                "f_WT": 2 if scraper_input.is_remote else None,
                 "f_JT": (
                     self.job_type_code(scraper_input.job_type)
                     if scraper_input.job_type
                     else None
                 ),
+                # Customizations start -----------------------
+                "f_WT": "2,3",  # remote and hybrid
+                "f_TPR": "",
+                "geoId": 100495523,  # Local GeoID
+                "f_E": 4,  # Experience Mid and Senior
+                # Customizations end --------------------------
                 "pageNum": 0,
                 "start": page + scraper_input.offset,
                 "f_AL": "true" if scraper_input.easy_apply else None,

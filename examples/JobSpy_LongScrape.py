@@ -4,14 +4,14 @@ import os
 import time
 
 # creates csv a new filename if the jobs.csv already exists.
-csv_filename = "jobs.csv"
+csv_filename = "data/jobs_0.csv"
 counter = 1
 while os.path.exists(csv_filename):
-    csv_filename = f"jobs_{counter}.csv"
+    csv_filename = f"data/jobs_{counter}.csv"
     counter += 1
 
 # results wanted and offset
-results_wanted = 1000
+results_wanted = 200
 offset = 0
 
 all_jobs = []
@@ -27,17 +27,17 @@ while len(all_jobs) < results_wanted:
     while retry_count < max_retries:
         print("Doing from", offset, "to", offset + results_in_each_iteration, "jobs")
         try:
-            jobs = scrape_jobs(
-                site_name=["indeed"],
-                search_term="software engineer",
-                # New York, NY
-                # Dallas, TX
-                # Los Angeles, CA
-                location="Los Angeles, CA",
+            jobs: pd.DataFrame = scrape_jobs(
+                site_name=["linkedin"],  # ["indeed", "linkedin", "glassdoor"],
+                search_term="Frontend Engineer",
+                location="London",
+                distance=25,
+                linkedin_fetch_description=True,
+                job_type="fulltime",
+                country_indeed="UK",
                 results_wanted=min(
                     results_in_each_iteration, results_wanted - len(all_jobs)
                 ),
-                country_indeed="USA",
                 offset=offset,
                 # proxy="http://jobspy:5a4vpWtj8EeJ2hoYzk@ca.smartproxy.com:20001",
             )
