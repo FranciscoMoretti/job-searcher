@@ -29,7 +29,7 @@ while len(all_jobs) < results_wanted:
         try:
             jobs: pd.DataFrame = scrape_jobs(
                 site_name=["linkedin"],  # ["indeed", "linkedin", "glassdoor"],
-                search_term="Frontend Engineer",
+                search_term="Full-Stack Engineer",
                 location="London",
                 distance=25,
                 linkedin_fetch_description=True,

@@ -11,7 +11,7 @@ KEYWORDS_REQUIREMENTS: List[List[str]] = [
 
 DATA_PATH = "data/"
 
-JOBS_SCRAPPED_CSV = DATA_PATH + "jobs_scrapped.csv"
+JOBS_SEEN_CSV = DATA_PATH + "jobs_seen.csv"
 # TODO: Not sure if new should be in memory / queue or in a CSV db
-JOBS_NEW = DATA_PATH + "jobs_new.csv"
+JOBS_NEW_CSV = DATA_PATH + "jobs_new.csv"
 JOBS_KEYWORD_MATCHED_CSV = DATA_PATH + "jobs_keyword_matched.csv"
