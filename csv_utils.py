@@ -1,6 +1,7 @@
 import pandas as pd
 
 
+# TODO: perform validation here with the schema
 def read_from_csv(file_name):
     # Open the CSV file
     with open(file_name, "r") as file:
