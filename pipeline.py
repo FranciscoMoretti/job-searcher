@@ -7,6 +7,7 @@ from typing import List, Optional
 import pandas as pd
 
 from csv_utils import read_from_csv, save_to_csv
+from filter_by_keywords import filter_by_keywords
 from merge_jobs import extend_non_repeated
 from metadata_utils import read_metadata, save_metadata
 from pipeline_config import (
@@ -27,6 +28,7 @@ from source_file_utils import (
 def pipeline():
     """Main pipeline function."""
     sources_to_raw()
+    raw_to_filtered_keywords()
 
 
 def sources_to_raw() -> List[pd.DataFrame]:
@@ -34,11 +36,12 @@ def sources_to_raw() -> List[pd.DataFrame]:
     jobs = get_jobs_raw()
 
     metadata = read_metadata()
-    last_parsed_source_idx = metadata["last_parsed_source_idx"]
-    file_nums = get_source_files_nums()
-    new_file_nums = [
-        file_num for file_num in file_nums if file_num > last_parsed_source_idx
-    ]
+    new_file_nums = get_unparsed_source_files_numbers(metadata)
+
+    if not new_file_nums:
+        print("No new files to parse")
+        return
+
     for file_num in new_file_nums:
         file_path = num_to_source_file_path(file_num)
         # Read the CSV file and append it to the jobs dataframe
@@ -55,9 +58,27 @@ def sources_to_raw() -> List[pd.DataFrame]:
     # Update the last parsed source in the metadata
     print(f"Saved {len(jobs)} jobs to {JOBS_RAW_CSV}")
 
-    if new_file_nums:
-        metadata["last_parsed_source_idx"] = max(new_file_nums)
+    metadata["last_parsed_source_idx"] = max(new_file_nums)
     save_metadata(metadata)
+
+
+def get_unparsed_source_files_numbers(metadata):
+    last_parsed_source_idx = metadata["last_parsed_source_idx"]
+    file_nums = get_source_files_nums()
+    new_file_nums = [
+        file_num for file_num in file_nums if file_num > last_parsed_source_idx
+    ]
+
+    return new_file_nums
+
+
+def raw_to_filtered_keywords() -> pd.DataFrame:
+    """Read the jobs_raw.csv file and filter the keywords"""
+    df = filter_by_keywords(read_from_csv(JOBS_RAW_CSV), KEYWORDS_REQUIREMENTS)
+    # Print the filtered dataframe
+    print(f"Filter (keywords) passed by {len(df)} jobs")
+    # Save the filtered dataframe to a new CSV file
+    save_to_csv(df, JOBS_KEYWORD_MATCHED_CSV)
 
 
 def get_jobs_raw():
