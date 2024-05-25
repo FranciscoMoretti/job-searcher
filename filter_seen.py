@@ -10,6 +10,8 @@ def filter_seen_jobs(
     seen_jobs: pd.DataFrame, candidate_jobs: pd.DataFrame
 ) -> pd.DataFrame:
     """Filters out jobs that are already seen in the database."""
-    seen_jobs = seen_jobs.set_index("job_url")
-    candidate_jobs = candidate_jobs.set_index("job_url")
-    return candidate_jobs[~candidate_jobs.index.isin(seen_jobs.index)]
+    # Get candidate_jobs with values in the job_url column that are nto in the seen_jobs job_url column values
+    filtered_candidate_jobs = candidate_jobs[
+        ~candidate_jobs["job_url"].isin(seen_jobs["job_url"])
+    ]
+    return filtered_candidate_jobs
