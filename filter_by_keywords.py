@@ -5,13 +5,6 @@ from typing import List
 import pandas as pd
 from textblob import TextBlob
 
-from csv_utils import read_from_csv, save_to_csv
-from pipeline_config import (
-    JOBS_KEYWORD_MATCHED_CSV,
-    JOBS_NEW,
-    KEYWORDS_REQUIREMENTS,
-)
-
 
 def tokenize(text: str) -> List[str]:
     """Tokenize a text into a list of words."""
@@ -57,12 +50,3 @@ def single_requirement_description_filter(
         if literal_match and word_match:
             return True
     return False
-
-
-if __name__ == "__main__":
-    # Read the CSV file
-    df = filter_by_keywords(read_from_csv(JOBS_NEW), KEYWORDS_REQUIREMENTS)
-    # Print the filtered dataframe
-    print(df)
-    # Save the filtered dataframe to a new CSV file
-    save_to_csv(df, JOBS_KEYWORD_MATCHED_CSV)
