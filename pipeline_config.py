@@ -15,7 +15,7 @@ METADATA_JSON = DATA_PATH + "metadata.json"
 
 JOBS_SOURCE_FILENAME_BASE = "jobs_"
 JOBS_SOURCE_FILENAME_EXT = "csv"
-JOBS_SOURCES_CSV = DATA_PATH + "jobs_sources.csv"
+JOBS_RAW_CSV = DATA_PATH + "jobs_raw.csv"
 JOBS_SEEN_CSV = DATA_PATH + "jobs_seen.csv"
 # TODO: Not sure if new should be in memory / queue or in a CSV db
 JOBS_NEW_CSV = DATA_PATH + "jobs_new.csv"

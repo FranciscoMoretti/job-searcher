@@ -5,7 +5,8 @@ from typing import TypedDict
 
 
 class Metadata(TypedDict):
-    last_parsed_source: int
+    last_parsed_source_idx: int
+    last_processed_job_idx: int
 
 
 def read_metadata() -> Metadata:

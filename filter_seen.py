@@ -6,7 +6,9 @@ from csv_utils import read_from_csv, save_to_csv
 from pipeline_config import JOBS_NEW_CSV, JOBS_SEEN_CSV
 
 
-def filter_seen(seen_jobs: pd.DataFrame, candidate_jobs: pd.DataFrame) -> pd.DataFrame:
+def filter_seen_jobs(
+    seen_jobs: pd.DataFrame, candidate_jobs: pd.DataFrame
+) -> pd.DataFrame:
     """Filters out jobs that are already seen in the database."""
     seen_jobs = seen_jobs.set_index("job_url")
     candidate_jobs = candidate_jobs.set_index("job_url")
@@ -17,7 +19,7 @@ if __name__ == "__main__":
     # Read the CSV file
     seen_jobs = read_from_csv(JOBS_SEEN_CSV)
     candidate_jobs = read_from_csv("data/jobs_1.csv")
-    filtered_jobs = filter_seen(seen_jobs, candidate_jobs)
+    filtered_jobs = filter_seen_jobs(seen_jobs, candidate_jobs)
     # Print the filtered dataframe
     print(filtered_jobs)
     # Save the filtered dataframe to a new CSV file
